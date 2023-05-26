@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Understanding JavaScript's Capture</title>
+  <link rel="icon" href="https://fav.farm/🔥" />
+</head>
+<body class="bod">
+
+  <div class="one">
+    <div class="two">
+      <div class="three">
+      </div>
+    </div>
+  </div>
+
+<style>
+  html {
+    box-sizing: border-box;
+  }
+
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+
+  div {
+    width: 100%;
+    padding: 100px;
+  }
+
+  .one {
+    background: thistle;
+  }
+
+  .two {
+    background: mistyrose;
+  }
+
+  .three {
+    background: coral;
+  }
+</style>
+
+<button></button>
+<script>
+const divs = document.querySelectorAll('div');
+const button = document.querySelector('button');
+
+function logText(e) {
+  console.log(this.classList.value);
+  e.stopPropagation(); // stops bubbling(3,2,1) and capture(1,2,3), (all the way up or all the way down), but still, bubble and capture are opposite
+  // console.log(this);
+}
+
+// document.body.addEventListener('click', logText);
+
+divs.forEach(div => div.addEventListener('click', logText, {
+   capture: false, // in default, capture is false
+   once: true // unbinds eventListener, so it works only once
+})); 
+
+button.addEventListener('click', () => {
+  console.log('Click!!!');
+}, {
+  once: true // eventListener works only once
+});
+
+</script>
+</body>
+</html>
